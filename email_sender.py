@@ -46,7 +46,7 @@ to_addresses = ['verychaoticpodcast@gmail.com', 'iniememudosen@gmail.com']
 email_sender = EmailSender(smtp_server, smtp_port, login, password)
 
 # Schedule daily email at 16:40 AM
-schedule.every().day.at("16:40").do(send_daily_email, email_sender, to_addresses)
+schedule.every().day.at("19:00").do(send_daily_email, email_sender, to_addresses)
 
 # Keep the script running to trigger the daily task
 while True:

@@ -8,7 +8,7 @@ class TestEmailSender(unittest.TestCase):
     def test_send_email_success(self, mock_smtp):
         # Mock the SMTP object and its methods
         smtp_instance = MagicMock()
-        mock_smtp.return_value = smtp_instance
+        mock_smtp.return_value = smtp_instancesource venv/bin/activate
 
         email_sender = EmailSender('smtp.gmail.com', 587, 'mhizxeryl@gmail.com', 'btlr uiqh urzd yneh')
         to_addresses = ['iniememudosen@gmail.com']
