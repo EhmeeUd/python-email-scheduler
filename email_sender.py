@@ -1,8 +1,14 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import schedule
-import time
+from dotenv import load_dotenv
+from os import getenv
+
+
+load_dotenv()
+
+
+
 
 class EmailSender:
     def __init__(self, smtp_server, smtp_port, login, password):
@@ -11,6 +17,7 @@ class EmailSender:
         self.login = login
         self.password = password
 
+
     def send_email(self, subject, body, to_addresses):
         try:
             msg = MIMEMultipart()
@@ -18,7 +25,9 @@ class EmailSender:
             msg['To'] = ', '.join(to_addresses)
             msg['Subject'] = subject
 
+
             msg.attach(MIMEText(body, 'plain'))
+
 
             with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
                 server.starttls()
@@ -31,24 +40,23 @@ class EmailSender:
             print(f"Failed to send email: {str(e)}")
             return False
 
+
 def send_daily_email(email_sender, to_addresses):
     subject = "A Lover's Note"
     body = "This is your daily email update from chaos test project."
     email_sender.send_email(subject, body, to_addresses)
 
-# Configuration
-smtp_server = 'smtp.gmail.com'
-smtp_port = 587
-login = 'mhizxeryl@gmail.com'
-password = 'btlr uiqh urzd yneh'
 
-to_addresses = ['verychaoticpodcast@gmail.com', 'iniememudosen@gmail.com']
+# Configuration
+smtp_server = getenv("SMTP_SERVER")
+smtp_port = getenv("SMTP_PORT")
+login = getenv("LOGIN")
+password = getenv("PASSWORD")
+
+
+to_addresses = getenv("TO").split(',')
+print(to_addresses)
 email_sender = EmailSender(smtp_server, smtp_port, login, password)
 
-# Schedule daily email at 16:40 AM
-schedule.every().day.at("19:00").do(send_daily_email, email_sender, to_addresses)
 
-# Keep the script running to trigger the daily task
-while True:
-    schedule.run_pending()
-    time.sleep(60)
+send_daily_email(email_sender, to_addresses)
