@@ -8,8 +8,6 @@ from os import getenv
 load_dotenv()
 
 
-
-
 class EmailSender:
     def __init__(self, smtp_server, smtp_port, login, password):
         self.smtp_server = smtp_server
@@ -48,13 +46,14 @@ def send_daily_email(email_sender, to_addresses):
 
 
 # Configuration
-smtp_server = getenv("SMTP_SERVER")
-smtp_port = getenv("SMTP_PORT")
-login = getenv("LOGIN")
-password = getenv("PASSWORD")
+smtp_server = getenv("SMTP_SERVER", "smtp.example.com")
+smtp_port = getenv("SMTP_PORT", "587")
+login = getenv("LOGIN", "test@example.com")
+password = getenv("PASSWORD", "password")
 
 
-to_addresses = getenv("TO").split(',')
+to_addresses = getenv("TO", "default@example.com").split(',')
+
 print(to_addresses)
 email_sender = EmailSender(smtp_server, smtp_port, login, password)
 

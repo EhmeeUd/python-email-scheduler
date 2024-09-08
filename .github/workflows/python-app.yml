@@ -25,7 +25,13 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
 
-    - name: Run Unit Tests
+    - name: Set environment variables using secrets and run unit test
+      env:
+        SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+        SMTP_PORT: ${{ secrets.SMTP_PORT }}
+        LOGIN: ${{ secrets.SMTP_LOGIN }}
+        PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        TO: gabfestchannel@gmail.com
       run: |
         source venv/bin/activate
         python -m unittest discover
