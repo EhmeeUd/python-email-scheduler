@@ -50,7 +50,17 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
           cd /home/ubuntu/appEmail
+
+          # Check if the virtual environment exists, if not, create it
+          if [ ! -d "venv" ]; then
+            python3 -m venv venv
+          fi
+
+          # Pull the latest changes from GitHub
           git pull origin main
+
+          # Activate the virtual environment and install dependencies
           source venv/bin/activate
           pip install -r requirements.txt
-          # Restart any background process or service running the app
+
+          sudo systemctl restart emailapp
