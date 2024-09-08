@@ -49,7 +49,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
-          cd /home/ubuntu/appEmail
+          cd /home/ubuntu/appEmail/python-email-scheduler
 
           # Check if the virtual environment exists, if not, create it
           if [ ! -d "venv" ]; then
